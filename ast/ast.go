@@ -2,7 +2,7 @@ package ast
 
 import (
 	"fmt"
-	"gocc/token"
+	"github.com/hangingman/gocc/token"
 )
 
 type Kind int

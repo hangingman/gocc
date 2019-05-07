@@ -2,9 +2,9 @@ package parser
 
 import (
 	"fmt"
-	"gocc/ast"
-	"gocc/lexer"
-	"gocc/token"
+	"github.com/hangingman/gocc/ast"
+	"github.com/hangingman/gocc/lexer"
+	"github.com/hangingman/gocc/token"
 	"strconv"
 )
 

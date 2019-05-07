@@ -4,3 +4,4 @@ testfile
 asm/
 app
 gocc
+gocc.*

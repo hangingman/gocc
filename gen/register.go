@@ -1,6 +1,6 @@
 package gen
 
-import "gocc/ast"
+import "github.com/hangingman/gocc/ast"
 
 type Register int
 

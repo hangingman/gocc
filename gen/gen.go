@@ -2,8 +2,8 @@ package gen
 
 import (
 	"fmt"
-	"gocc/ast"
-	"gocc/token"
+	"github.com/hangingman/gocc/ast"
+	"github.com/hangingman/gocc/token"
 	"reflect"
 )
 

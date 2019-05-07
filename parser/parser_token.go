@@ -1,6 +1,6 @@
 package parser
 
-import . "gocc/token"
+import . "github.com/hangingman/gocc/token"
 
 var (
 	typeKeys = []TokenKind{

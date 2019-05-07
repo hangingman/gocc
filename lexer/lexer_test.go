@@ -1,7 +1,7 @@
 package lexer
 
 import (
-	. "gocc/token"
+	. "github.com/hangingman/gocc/token"
 	"testing"
 )
 

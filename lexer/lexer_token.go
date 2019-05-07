@@ -1,6 +1,6 @@
 package lexer
 
-import . "gocc/token"
+import . "github.com/hangingman/gocc/token"
 
 var (
 	typeKeys = map[string]TokenKind{

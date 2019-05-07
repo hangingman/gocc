@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"gocc/gen"
-	"gocc/parser"
+	"github.com/hangingman/gocc/gen"
+	"github.com/hangingman/gocc/parser"
 	"io/ioutil"
 	"os"
 	"os/exec"
