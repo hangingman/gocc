@@ -106,17 +106,22 @@ func (gen *Gen) prologue() {
 	gen.emit(MOVQ, RSP, RBP)
 }
 
-func (gen *Gen) epilogue() {
+func (gen *Gen) epilogue(funcSymbol string) {
+	if funcSymbol == "main" {
+		gen.emitf("\t%s\t%s\n", INT, "$0x80")
+		return
+	}
+
 	gen.emit(LEAVE)
 	gen.emit(RET)
 }
 
-func (gen *Gen) emitFuncDef(n string) {
-	if n == "main" {
-		n = "start"
+func (gen *Gen) emitFuncDef(funcSymbol string) {
+	if funcSymbol == "main" {
+		funcSymbol = "start"
 	}
-	gen.Str += ".global _" + n + "\n"
-	gen.Str += "_" + n + ":\n"
+	gen.Str += ".global _" + funcSymbol + "\n"
+	gen.Str += "_" + funcSymbol + ":\n"
 }
 
 func (gen *Gen) Generate(n ast.Node) {
@@ -197,10 +202,22 @@ func (gen *Gen) funcDef(v ast.FuncDef) {
 		gen.argDef(arg)
 		if col, ok := gen.lookup(arg.Name.String()); ok {
 			if i < ARG_COUNT {
-				gen.emitf("\t%s\t%s, %d(%s)\n", mov(arg.Type), argsRegister(i, arg.Type), -col.pos, RBP)
+				gen.emitf("\t%s\t%s, %d(%s)\n",
+					mov(arg.Type),
+					argsRegister(i, arg.Type),
+					-col.pos,
+					RBP)
 			} else {
-				gen.emitf("\t%s\t%d(%s), %s\n", MOVL, (i-ARG_COUNT+1)*8+8, RBP, EAX)
-				gen.emitf("\t%s\t%s, %d(%s)\n", MOVL, EAX, -col.pos, RBP)
+				gen.emitf("\t%s\t%d(%s), %s\n",
+					MOVL,
+					(i-ARG_COUNT+1)*8+8,
+					RBP,
+					EAX)
+				gen.emitf("\t%s\t%s, %d(%s)\n",
+					MOVL,
+					EAX,
+					-col.pos,
+					RBP)
 			}
 		} else {
 			panic("ident is not defined")
@@ -218,7 +235,7 @@ func (gen *Gen) funcDef(v ast.FuncDef) {
 		gen.emit(XORL, EAX, EAX)
 	}
 
-	gen.epilogue()
+	gen.epilogue(v.Name)
 }
 
 func (gen *Gen) expr(e ast.Expr) {

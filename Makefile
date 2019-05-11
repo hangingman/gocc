@@ -15,7 +15,7 @@ build:
 	$(GOBUILD) -o ${BIN} -v
 
 test:
-	$(GOTEST) -v ./...
+	./test.sh
 
 clean:
 	$(GOCLEAN)

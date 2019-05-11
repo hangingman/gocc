@@ -14,6 +14,7 @@ const (
 	SUBL
 	SUBQ
 	IMUL
+	INT
 	IDIV
 	CLTD
 	XORL
@@ -66,6 +67,8 @@ func (c Opcode) String() string {
 		return "subq"
 	case IMUL:
 		return "imul"
+	case INT:
+		return "int"
 	case IDIV:
 		return "idiv"
 	case CLTD:
