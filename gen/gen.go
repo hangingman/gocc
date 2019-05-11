@@ -101,9 +101,13 @@ func (gen *Gen) emitf(format string, a ...interface{}) {
 	gen.Str += fmt.Sprintf(format, a...)
 }
 
-func (gen *Gen) prologue() {
+func (gen *Gen) prologue(funcSymbol string) {
 	gen.emit(PUSH, RBP)
 	gen.emit(MOVQ, RSP, RBP)
+	if funcSymbol == "main" {
+		gen.emitf("\t%s\t%s,\t%s\n", MOV, "$1", EAX)
+		return
+	}
 }
 
 func (gen *Gen) epilogue(funcSymbol string) {
@@ -196,7 +200,7 @@ func (gen *Gen) funcDef(v ast.FuncDef) {
 	gen.m = Map{}
 
 	gen.emitFuncDef(v.Name)
-	gen.prologue()
+	gen.prologue(v.Name)
 
 	for i, arg := range v.Args {
 		gen.argDef(arg)
@@ -253,7 +257,7 @@ func (gen *Gen) expr(e ast.Expr) {
 			panic("ident is not defined")
 		}
 	case ast.IntVal:
-		gen.emit(MOVL, v, EAX)
+		gen.emit(MOVL, v, EBX)
 	case ast.CharVal:
 		gen.emit(MOVB, v, AL)
 	case ast.FuncCall:

@@ -29,6 +29,7 @@ const (
 	PUSH
 	POP
 	LEAQ
+	MOV
 	CALL
 	LEAVE
 	RET
@@ -49,6 +50,8 @@ func mov(t ast.CType) Opcode {
 
 func (c Opcode) String() string {
 	switch c {
+	case MOV:
+		return "mov"
 	case MOVB:
 		return "movb"
 	case MOVW:
