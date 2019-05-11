@@ -104,14 +104,11 @@ func (gen *Gen) emitf(format string, a ...interface{}) {
 func (gen *Gen) prologue(funcSymbol string) {
 	gen.emit(PUSH, RBP)
 	gen.emit(MOVQ, RSP, RBP)
-	if funcSymbol == "main" {
-		gen.emitf("\t%s\t%s,\t%s\n", MOV, "$1", EAX)
-		return
-	}
 }
 
 func (gen *Gen) epilogue(funcSymbol string) {
 	if funcSymbol == "main" {
+		gen.emitf("\t%s\t%s,\t%s\n", MOV, "$1", EAX)        
 		gen.emitf("\t%s\t%s\n", INT, "$0x80")
 		return
 	}
