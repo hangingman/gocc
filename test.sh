@@ -44,7 +44,7 @@ test() {
   fi
   ASM_FILE="${ASM}/${1}.s"
   ./$APP -S -o $ASM_FILE $FILE || return
-  gcc $ASM_FILE -o $OUT
+  gcc $ASM_FILE -o $OUT -nostdlib
   ./$OUT
   res=$?
   cat $FILE

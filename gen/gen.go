@@ -112,6 +112,9 @@ func (gen *Gen) epilogue() {
 }
 
 func (gen *Gen) emitFuncDef(n string) {
+	if n == "main" {
+		n = "start"
+	}
 	gen.Str += ".global _" + n + "\n"
 	gen.Str += "_" + n + ":\n"
 }
